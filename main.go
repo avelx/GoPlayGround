@@ -1,21 +1,39 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"net/http"
 )
 
-//TIP <p>To run your code, right-click the code and select <b>Run</b>.</p> <p>Alternatively, click
-// the <icon src="AllIcons.Actions.Execute"/> icon in the gutter and select the <b>Run</b> menu item from here.</p>
+type User struct {
+	Firstname string `json:"firstname"`
+	Lastname  string `json:"lastname"`
+	Age       int    `json:"age"`
+}
+
+type MyData struct {
+	Id   string `json:"id"`
+	data string `json:"data"`
+}
 
 func main() {
-	//TIP <p>Press <shortcut actionId="ShowIntentionActions"/> when your caret is at the underlined text
-	// to see how GoLand suggests fixing the warning.</p><p>Alternatively, if available, click the lightbulb to view possible fixes.</p>
-	s := "gopher"
-	fmt.Printf("Hello and welcome, %s!\n", s)
+	http.HandleFunc("/decode", func(w http.ResponseWriter, r *http.Request) {
+		var data MyData = MyData{Id: "test", data: "Go"}
+		json.NewDecoder(r.Body).Decode(&data)
 
-	for i := 1; i <= 5; i++ {
-		//TIP <p>To start your debugging session, right-click your code in the editor and select the Debug option.</p> <p>We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-		// for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.</p>
-		fmt.Println("i =", 100/i)
-	}
+		fmt.Fprintf(w, "This is our data: %s %s", data.Id, data.data)
+	})
+
+	http.HandleFunc("/encode", func(w http.ResponseWriter, r *http.Request) {
+		peter := User{
+			Firstname: "John",
+			Lastname:  "Doe",
+			Age:       25,
+		}
+
+		json.NewEncoder(w).Encode(peter)
+	})
+
+	http.ListenAndServe(":8080", nil)
 }
