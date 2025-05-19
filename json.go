@@ -46,7 +46,7 @@ func (a Animal) MarshalJSON() ([]byte, error) {
 	return json.Marshal(s)
 }
 
-func main() {
+func main2() {
 	blob := `["gopher","armadillo","zebra","unknown","gopher","bee","gopher","zebra"]`
 	var zoo []Animal
 	if err := json.Unmarshal([]byte(blob), &zoo); err != nil {
