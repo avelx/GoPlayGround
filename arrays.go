@@ -30,10 +30,14 @@ func main() {
 
 	// Slice via a => read file
 
-	file, _ := os.Open("data/test.dat") // For read access.
+	var file, err = os.Open("data/test.dat") // For read access.
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	data := make([]byte, 100)
-	var count, err = file.Read(data)
+	var count int
+	count, err = file.Read(data)
 	for count > 0 {
 		if err != nil {
 			log.Fatal(err)
