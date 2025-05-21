@@ -26,6 +26,20 @@ func readCsvFile(filePath string) [][]string {
 	return records
 }
 
+func processCsvFile(records *[][]string) map[string]record {
+	var recordsMap = make(map[string]record)
+	rec := *records
+	for i := 0; i < len(rec); i++ {
+		var r = record{
+			trackId: rec[i][0],
+			albumId: rec[i][1],
+			title:   rec[i][2],
+		}
+		recordsMap[r.trackId] = r
+	}
+	return recordsMap
+}
+
 type record struct {
 	trackId string
 	albumId string
@@ -34,19 +48,8 @@ type record struct {
 
 func main() {
 	records := readCsvFile("data/tracks.csv")
-
-	var recordsMap = make(map[string]record)
-
-	for i := 0; i < len(records); i++ {
-		var record = record{
-			trackId: records[i][0],
-			albumId: records[i][1],
-			title:   records[i][2],
-		}
-		recordsMap[record.trackId] = record
-		//fmt.Println(record)
-		//fmt.Println(records[i][0])
+	var allRecordsMap = processCsvFile(&records)
+	for _, rec := range allRecordsMap {
+		fmt.Println("Record: ", rec)
 	}
-
-	fmt.Println(recordsMap)
 }
