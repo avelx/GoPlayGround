@@ -17,7 +17,22 @@ func Sum(a *[3]float64) (sum float64) {
 //array := [...]float64{7.0, 8.5, 9.1}
 //x := Sum(&array)  // Note the explicit address-of operator
 
-func main() {
+// A toy implementation of cube root using Newton's method.
+func CubeRoot(x float64) float64 {
+	z := x / 3 // Arbitrary initial value
+	for i := 0; i < 1e6; i++ {
+		prevz := z
+		z -= (z*z*z - x) / (3 * z * z)
+		//if veryClose(z, prevz) {
+		if prevz != z {
+			return z
+		}
+	}
+	// A million iterations has not converged; something is wrong.
+	panic(fmt.Sprintf("CubeRoot(%g) did not converge", x))
+}
+
+func main11() {
 	/*
 		Arrays are values. Assigning one array to another copies all the elements.
 		In particular, if you pass an array to a function, it will receive a copy of the array, not a pointer to it.
