@@ -9,9 +9,9 @@ import "fmt"
 	    arrays
 	    slices
 */
-func main() {
-	x := 1
-	fmt.Println("Result: %i", x)
+func main21() {
+	//x := 1
+	//fmt.Println("Result: %i", x)
 
 	var m = map[string]int{
 		"rsc": 3711,
