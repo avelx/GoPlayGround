@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"regexp"
 	"strconv"
 )
 
@@ -51,9 +52,17 @@ type record struct {
 func main() {
 	records := readCsvFile("data/tracks.csv")
 	var allRecordsMap = processCsvFile(&records)
+
 	for _, rec := range allRecordsMap {
 		//filter our all records: between [100-200]
-		if rec.trackId >= 100 && rec.trackId <= 200 {
+		//if rec.trackId >= 100 && rec.trackId <= 200 {
+		//	fmt.Println("Record: ", rec)
+		//}
+		matched, err := regexp.Match(`Two.*`, []byte(rec.title))
+		if err != nil {
+			log.Fatal(err)
+		}
+		if matched {
 			fmt.Println("Record: ", rec)
 		}
 	}
