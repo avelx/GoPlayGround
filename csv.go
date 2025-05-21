@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strconv"
 )
 
 /*
@@ -26,12 +27,13 @@ func readCsvFile(filePath string) [][]string {
 	return records
 }
 
-func processCsvFile(records *[][]string) map[string]record {
-	var recordsMap = make(map[string]record)
+func processCsvFile(records *[][]string) map[int]record {
+	var recordsMap = make(map[int]record)
 	rec := *records
 	for i := 0; i < len(rec); i++ {
+		id, _ := strconv.Atoi(rec[i][0])
 		var r = record{
-			trackId: rec[i][0],
+			trackId: id,
 			albumId: rec[i][1],
 			title:   rec[i][2],
 		}
@@ -41,7 +43,7 @@ func processCsvFile(records *[][]string) map[string]record {
 }
 
 type record struct {
-	trackId string
+	trackId int
 	albumId string
 	title   string
 }
@@ -50,6 +52,9 @@ func main() {
 	records := readCsvFile("data/tracks.csv")
 	var allRecordsMap = processCsvFile(&records)
 	for _, rec := range allRecordsMap {
-		fmt.Println("Record: ", rec)
+		//filter our all records: between [100-200]
+		if rec.trackId >= 100 && rec.trackId <= 200 {
+			fmt.Println("Record: ", rec)
+		}
 	}
 }
