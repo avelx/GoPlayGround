@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"regexp"
 	"strconv"
 )
 
@@ -53,22 +52,23 @@ func main() {
 
 	var s string = "Data test "
 	var sRef = &s // This is a memory address
-	fmt.Println("Record: ", sRef)
+	var t = *sRef
+	fmt.Println("Record: ", sRef, t)
 
-	records := readCsvFile("data/tracks.csv")
-	var allRecordsMap = processCsvFile(&records)
-
-	for _, rec := range allRecordsMap {
-		//filter our all records: between [100-200]
-		//if rec.trackId >= 100 && rec.trackId <= 200 {
-		//	fmt.Println("Record: ", rec)
-		//}
-		matched, err := regexp.Match(`Two.*`, []byte(rec.title))
-		if err != nil {
-			log.Fatal(err)
-		}
-		if matched {
-			fmt.Println("Record: ", rec)
-		}
-	}
+	//records := readCsvFile("data/tracks.csv")
+	//var allRecordsMap = processCsvFile(&records)
+	//
+	//for _, rec := range allRecordsMap {
+	//	//filter our all records: between [100-200]
+	//	//if rec.trackId >= 100 && rec.trackId <= 200 {
+	//	//	fmt.Println("Record: ", rec)
+	//	//}
+	//	matched, err := regexp.Match(`Two.*`, []byte(rec.title))
+	//	if err != nil {
+	//		log.Fatal(err)
+	//	}
+	//	if matched {
+	//		fmt.Println("Record: ", rec)
+	//	}
+	//}
 }
