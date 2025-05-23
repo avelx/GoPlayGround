@@ -50,6 +50,11 @@ type record struct {
 }
 
 func main() {
+
+	var s string = "Data test "
+	var sRef = &s // This is a memory address
+	fmt.Println("Record: ", sRef)
+
 	records := readCsvFile("data/tracks.csv")
 	var allRecordsMap = processCsvFile(&records)
 
